@@ -38,6 +38,14 @@ packages::
     >>> from qtpy import QtGui, QtWidgets, QtCore
     >>> print(QtWidgets.QWidget)
 
+PySide6
+=======
+
+    >>> import os
+    >>> os.environ['QT_API'] = 'pyside6'
+    >>> from qtpy import QtGui, QtWidgets, QtCore
+    >>> print(QtWidgets.QWidget)
+
 PyQt4
 =====
 
@@ -100,6 +108,9 @@ PYSIDE_API = ['pyside']
 # Names of the expected PySide2 api
 PYSIDE2_API = ['pyside2']
 
+# Names of the expected PySide6 api
+PYSIDE6_API = ['pyside6']
+
 # Detecting if a binding was specified by the user
 binding_specified = QT_API in os.environ
 
@@ -108,17 +119,19 @@ os.environ.setdefault(QT_API, 'pyqt5')
 
 API = os.environ[QT_API].lower()
 initial_api = API
-assert API in (PYQT5_API + PYQT4_API + PYSIDE_API + PYSIDE2_API)
+assert API in (PYQT5_API + PYQT4_API + PYSIDE_API + PYSIDE2_API + PYSIDE6_API)
 
 is_old_pyqt = is_pyqt46 = False
 PYQT5 = True
-PYQT4 = PYSIDE = PYSIDE2 = False
+PYQT4 = PYSIDE = PYSIDE2 = PYSIDE6 = False
 
 # When `FORCE_QT_API` is set, we disregard
 # any previously imported python bindings.
 if os.environ.get('FORCE_QT_API') is not None:
     if 'PyQt5' in sys.modules:
         API = initial_api if initial_api in PYQT5_API else 'pyqt5'
+    elif 'PySide6' in sys.modules:
+       API = initial_api if initial_api in PYSIDE6_API else 'pyside6'
     elif 'PySide2' in sys.modules:
         API = initial_api if initial_api in PYSIDE2_API else 'pyside2'
     elif 'PyQt4' in sys.modules:
@@ -174,6 +187,19 @@ if API in PYSIDE2_API:
     except ImportError:
         API = os.environ['QT_API'] = 'pyqt'
 
+if API in PYSIDE6_API:
+    try:
+        from PySide6 import __version__ as PYSIDE_VERSION  # analysis:ignore
+        from PySide6.QtCore import __version__ as QT_VERSION  # analysis:ignore
+
+        PYQT_VERSION = None
+        PYQT5 = False
+        PYSIDE6 = True
+
+    except ImportError:
+        API = os.environ['QT_API'] = 'pyqt'
+
+
 if API in PYQT4_API:
     try:
         import sip
@@ -209,7 +235,7 @@ if API in PYSIDE_API:
         from PySide import __version__ as PYSIDE_VERSION  # analysis:ignore
         from PySide.QtCore import __version__ as QT_VERSION  # analysis:ignore
         PYQT_VERSION = None
-        PYQT5 = PYSIDE2 = False
+        PYQT5 = PYSIDE2 = PYSIDE6 = False
         PYSIDE = True
     except ImportError:
         raise PythonQtError('No Qt bindings could be found')
@@ -221,7 +247,7 @@ if API != initial_api and binding_specified:
                   'using "{}"'.format(initial_api, API), RuntimeWarning)
 
 API_NAME = {'pyqt5': 'PyQt5', 'pyqt': 'PyQt4', 'pyqt4': 'PyQt4',
-            'pyside': 'PySide', 'pyside2':'PySide2'}[API]
+            'pyside': 'PySide', 'pyside2':'PySide2', 'pyside6': 'PySide6'}[API]
 
 if PYQT4:
     import sip

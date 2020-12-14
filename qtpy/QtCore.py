@@ -10,7 +10,7 @@
 Provides QtCore classes and functions.
 """
 
-from . import PYQT5, PYSIDE2, PYQT4, PYSIDE, PythonQtError
+from . import PYQT5, PYSIDE2, PYSIDE6, PYQT4, PYSIDE, PythonQtError
 
 
 if PYQT5:
@@ -27,6 +27,12 @@ if PYQT5:
 
     # Those are imported from `import *`
     del pyqtSignal, pyqtBoundSignal, pyqtSlot, pyqtProperty, QT_VERSION_STR
+
+elif PYSIDE6:
+   from PySide6.QtCore import *
+   import PySide6.QtCore
+   __version__ = PySide6.QtCore.__version__
+
 elif PYSIDE2:
     from PySide2.QtCore import *
 

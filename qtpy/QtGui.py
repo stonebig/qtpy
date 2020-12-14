@@ -14,13 +14,15 @@ Provides QtGui classes and functions.
 """
 import warnings
 
-from . import PYQT5, PYQT4, PYSIDE, PYSIDE2, PythonQtError
+from . import PYQT5, PYQT4, PYSIDE, PYSIDE2, PYSIDE6, PythonQtError
 
 
 if PYQT5:
     from PyQt5.QtGui import *
 elif PYSIDE2:
     from PySide2.QtGui import *
+elif PYSIDE6:
+    from PySide6.QtGui import *
 elif PYQT4:
     try:
         # Older versions of PyQt4 do not provide these
