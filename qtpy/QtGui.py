@@ -23,6 +23,7 @@ elif PYSIDE2:
     from PySide2.QtGui import *
 elif PYSIDE6:
     from PySide6.QtGui import *
+    QFontMetrics.width=QFontMetrics.horizontalAdvance
 elif PYQT4:
     try:
         # Older versions of PyQt4 do not provide these
