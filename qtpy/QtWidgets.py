@@ -25,7 +25,8 @@ elif PYSIDE6:
     from PySide6.QtGui import QAction , QActionGroup
     from PySide6.QtCore import QCoreApplication
     QApplication.flush=QCoreApplication.sendPostedEvents
-
+    QTextEdit.setTabStopWidth=QTextEdit.setTabStopDistance
+    QTextEdit.tabStopWidth=QTextEdit.tabStopDistance
 elif PYSIDE2:
     from PySide2.QtWidgets import *
 elif PYQT4:
