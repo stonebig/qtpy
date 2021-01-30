@@ -185,7 +185,7 @@ if API in PYSIDE2_API:
 
             del macos_version
     except ImportError:
-        API = os.environ['QT_API'] = 'pyqt'
+        API = os.environ['QT_API'] = 'pyside6'
 
 if API in PYSIDE6_API:
     try:
