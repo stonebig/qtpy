@@ -22,6 +22,10 @@ if PYQT5:
     from PyQt5.QtWidgets import *
 elif PYSIDE6:
     from PySide6.QtWidgets import *
+    from PySide6.QtGui import QAction , QActionGroup
+    from PySide6.QtCore import QCoreApplication
+    QApplication.flush=QCoreApplication.sendPostedEvents
+
 elif PYSIDE2:
     from PySide2.QtWidgets import *
 elif PYQT4:
