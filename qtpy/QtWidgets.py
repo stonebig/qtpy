@@ -22,6 +22,7 @@ if PYQT5:
     from PyQt5.QtWidgets import *
 elif PYSIDE6:
     from PySide6.QtWidgets import *
+    from PySide6.QtGui import QAction
 elif PYSIDE2:
     from PySide2.QtWidgets import *
 elif PYQT4:
