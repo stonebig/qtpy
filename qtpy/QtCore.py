@@ -32,6 +32,9 @@ elif PYSIDE6:
    from PySide6.QtCore import *
    import PySide6.QtCore
    __version__ = PySide6.QtCore.__version__
+   Qt.BackgroundColorRole=Qt.BackgroundRole
+   Qt.TextColorRole=Qt.ForegroundRole
+   Qt.MidButton = Qt.MiddleButton
 
 elif PYSIDE2:
     from PySide2.QtCore import *
